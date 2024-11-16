@@ -1,7 +1,7 @@
 #include "Game.h"
 
-App::App(Window *window)
-  :window(window) { }
+App::App(Window *window, Data::File *leaderboard)
+  :window(window), leaderboard(leaderboard) { }
 
 void App::Run(){
   while(window->IsRunning()){

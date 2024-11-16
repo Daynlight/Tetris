@@ -4,6 +4,7 @@
 
 static const char *TITLE = "Tetris";
 static const char SETTINGSPATH[] = "settings";
+static const char LEADERBOARDPATH[] = "leaderboard";
 static const SDL_WindowFlags WINDOWFLAGS = SDL_WindowFlags(SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 static const SDL_Rect WINDOWDEFAULTSIZE(100, 100, 500, 500);
 
@@ -15,11 +16,17 @@ int WinMain(){
     settings[2] = std::to_string(WINDOWDEFAULTSIZE.w);
     settings[3] = std::to_string(WINDOWDEFAULTSIZE.h);
     settings.save();
-  }
-  else settings.read();
+  } else settings.read();
 
+  Data::File leaderboard = Data::File(LEADERBOARDPATH, 1);
+  if(leaderboard.isEmpty()){
+    leaderboard[0] = std::to_string(0);
+    leaderboard.save();
+  } else leaderboard.read();
+
+  // Run App
   Window window(TITLE, std::stoi(settings[0]), std::stoi(settings[1]), std::stoi(settings[2]), std::stoi(settings[3]), WINDOWFLAGS);
-  App app(&window);
+  App app(&window, &leaderboard);
   app.Run();
 
   SDL_Rect rect = window.GetWindowPositionAndSize();
