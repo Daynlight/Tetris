@@ -6,7 +6,7 @@ public:
   App(Window *window);
   void Run();
 private:
-  bool isRunning = true;
+  void AppEvent();
   Window *window;
 };
 
