@@ -18,9 +18,9 @@ void App::AppEvent(){
     switch(event.type){
       
       default:
-        window->WindowEvent(event);
         break;
       
     }
+    window->WindowEvent(event);
   }
 }
