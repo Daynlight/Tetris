@@ -6,6 +6,7 @@ class App{
 private:
   enum State{
     Home,
+    GameStarting,
     GameRunning,
     GameEnded
   };
@@ -15,7 +16,7 @@ public:
 private:
   void RenderHome();
   void AppEvent();
-  State game_state = GameRunning;
+  State game_state = Home;
   Data::File *leaderboard;
   Window *window;
   const Uint8 rows, columns;

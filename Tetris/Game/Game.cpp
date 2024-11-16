@@ -14,6 +14,9 @@ void App::Run(){
       case Home:
       RenderHome();
       break;
+      case GameStarting:
+      game_state = GameRunning;
+      break;
       case GameRunning:
       tetris.Run();
       if(tetris.IsEnded()) game_state = GameEnded;
@@ -37,7 +40,8 @@ void App::AppEvent()
   SDL_Event event;
   while(SDL_PollEvent(&event)){
     switch(event.type){
-      
+      case SDL_KEYDOWN:
+        if(event.key.keysym.sym == SDLK_RETURN) game_state = GameStarting;
       default:
         break;
       
