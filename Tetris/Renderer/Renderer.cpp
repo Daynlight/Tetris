@@ -13,8 +13,15 @@ void Window::WindowEvent(SDL_Event event){
   }
 }
 
-bool Window::IsRunning(){
+const bool Window::IsRunning(){
   return running;
+}
+
+const SDL_Rect Window::GetWindowPositionAndSize(){
+  SDL_Rect rect;
+  SDL_GetWindowPosition(window, &rect.x, &rect.y);
+  SDL_GetWindowSize(window, &rect.w, &rect.h);
+  return rect;
 }
 
 void Window::Background(Uint8 r, Uint8 g, Uint8 b){
