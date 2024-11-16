@@ -24,11 +24,31 @@ const SDL_Rect Window::GetWindowPositionAndSize(){
   return rect;
 }
 
-void Window::Background(Uint8 r, Uint8 g, Uint8 b){
-    SDL_SetRenderDrawColor(renderer, r, g, b, 0);
-    SDL_RenderClear(renderer);
+void Window::Background(Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+  SDL_RenderClear(renderer);
 }
 
 void Window::Render(){
   SDL_RenderPresent(renderer);
+}
+
+void Window::RenderSquare(SDL_Rect *box, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+  SDL_RenderDrawRect(renderer, box);
+}
+
+void Window::RenderSquare(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+  SDL_Rect box(x, y, w, h);
+  RenderSquare(&box, r, g, b, a);
+}
+
+void Window::RenderFillSquare(SDL_Rect *box, Uint8 r, Uint8 g, Uint8 b, Uint8 a){
+  SDL_SetRenderDrawColor(renderer, r, g, b, a);
+  SDL_RenderFillRect(renderer, box);
+}
+
+void Window::RenderFillSquare(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+  SDL_Rect box(x, y, w, h);
+  RenderFillSquare(&box, r, g, b, a);
 }

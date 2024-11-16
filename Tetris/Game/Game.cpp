@@ -5,7 +5,8 @@ App::App(Window *window, Data::File *leaderboard)
 
 void App::Run(){
   while(window->IsRunning()){
-    window->Background(255,255,255);
+    window->Background(20,20,20);
+    window->RenderFillSquare(100, 100, 50, 50, 255, 0, 0);
 
     AppEvent(); 
     window->Render();
