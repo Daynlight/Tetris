@@ -1,12 +1,10 @@
 #include "Game.h"
 
 App::App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size)
-  :window(window), leaderboard(leaderboard), rows(rows), columns(columns), cell_size(cell_size) {
+  :window(window), leaderboard(leaderboard), tetris(window, rows, columns, cell_size) {
    }
 
 void App::Run(){
-  Tetris tetris(window, rows, columns, cell_size);
-
   while(window->IsRunning()){
     window->Background(20,20,20);
     
@@ -15,6 +13,7 @@ void App::Run(){
       RenderHome();
       break;
       case GameStarting:
+      tetris.Clear();
       game_state = GameRunning;
       break;
       case GameRunning:
@@ -42,16 +41,15 @@ void App::AppEvent()
     switch(event.type){
       case SDL_KEYDOWN:
         if(event.key.keysym.sym == SDLK_RETURN) game_state = GameStarting;
-      default:
-        break;
       
     }
+    tetris.TetrisEvent(event);
     window->WindowEvent(event);
   }
 }
 
 Tetris::Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size)
-  :window(window), rows(rows), columns(columns), cell_size(cell_size) {}
+  :window(window), rows(rows), columns(columns), cell_size(cell_size), current_block_position(rows/2) {}
 
 void Tetris::Run(){
   SDL_Rect canva = window->GetWindowPositionAndSize();
@@ -61,6 +59,7 @@ void Tetris::Run(){
   canva.h = cell_size*columns;
   window->RenderFillSquare(canva.x, canva.y, canva.w, canva.h, 255, 255, 255);
 
+  window->RenderFillSquare(current_block_position * cell_size + canva.x, canva.y, cell_size, cell_size, 255, 0, 0);
 
 }
 
@@ -68,5 +67,14 @@ void Tetris::Clear(){
 }
 
 bool Tetris::IsEnded(){
-  return false;
+  return is_ended;
+}
+
+void Tetris::TetrisEvent(SDL_Event event){
+  switch (event.type){
+  case SDL_KEYDOWN:
+    if(event.key.keysym.sym == SDLK_LEFT && current_block_position > 0) current_block_position--;
+    if(event.key.keysym.sym == SDLK_RIGHT && current_block_position < rows - 1) current_block_position++;
+    break;
+  }
 }
