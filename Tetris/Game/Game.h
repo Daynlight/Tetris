@@ -5,7 +5,7 @@
 
 class Tetris{
 public:
-  Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size);
+  Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size, Uint32 tick_speed);
   void Run();
   void Clear();
   bool IsEnded();
@@ -14,6 +14,7 @@ private:
   Window* window;
   bool is_ended = false;
   std::chrono::time_point<std::chrono::high_resolution_clock> last;
+  Uint32 tick_speed;
   Uint8 current_block_position;
   Uint8 current_block_height = 0;
   Uint8 rows, columns;
@@ -30,7 +31,7 @@ private:
     GameEnded
   };
 public:
-  App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size);
+  App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size, Uint32 tick_speed);
   void Run();
 private:
   void RenderHome();

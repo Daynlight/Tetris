@@ -1,7 +1,7 @@
 #include "Game.h"
 
-App::App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size)
-  :window(window), leaderboard(leaderboard), tetris(window, rows, columns, cell_size) {
+App::App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size, Uint32 tick_speed)
+  :window(window), leaderboard(leaderboard), tetris(window, rows, columns, cell_size, tick_speed) {
    }
 
 void App::Run(){
@@ -48,8 +48,8 @@ void App::AppEvent()
   }
 }
 
-Tetris::Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size)
-  :window(window), rows(rows), columns(columns), cell_size(cell_size), current_block_position(rows/2) {
+Tetris::Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size, Uint32 tick_speed)
+  :window(window), rows(rows), columns(columns), cell_size(cell_size), tick_speed(tick_speed), current_block_position(rows/2) {
     last = std::chrono::high_resolution_clock::now();
   }
 
@@ -78,6 +78,7 @@ void Tetris::Run(){
 }
 
 void Tetris::Clear(){
+  last = std::chrono::high_resolution_clock::now();
 }
 
 bool Tetris::IsEnded(){
