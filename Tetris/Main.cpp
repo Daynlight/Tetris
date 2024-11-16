@@ -1,16 +1,12 @@
 #include "Game/Game.h"
-
-#include "SDL2/SDL.h"
+#include "Renderer/Renderer.h"
 
 static const char *TITLE = "Tetris";
 static const char SETTINGSPATH[] = "settings";
 
 int WinMain(){
-  SDL_Window * window = SDL_CreateWindow(TITLE, 0, 0, 500, 500, SDL_WINDOW_SHOWN);
-
-  while(true){
-    
-  }
+  Window window(TITLE, 500, 500, 500, 500, SDL_WINDOW_SHOWN);
+  App app(&window);
 
   return 0;
 }
