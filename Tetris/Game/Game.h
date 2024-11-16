@@ -1,6 +1,7 @@
 #pragma once 
 #include "../Renderer/Renderer.h"
 #include "../vendor/Data/Data.h"
+#include <chrono>
 
 class Tetris{
 public:
@@ -12,7 +13,9 @@ public:
 private:
   Window* window;
   bool is_ended = false;
+  std::chrono::time_point<std::chrono::high_resolution_clock> last;
   Uint8 current_block_position;
+  Uint8 current_block_height = 0;
   Uint8 rows, columns;
   Uint32 cell_size;
 };
