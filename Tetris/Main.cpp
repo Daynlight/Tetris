@@ -1,13 +1,10 @@
 #include "Game/Game.h"
+#include "Settings.h"
 #include "Renderer/Renderer.h"
 #include "vendor/Data/Data.h"
 
-static const char *TITLE = "Tetris";
-static const char SETTINGSPATH[] = "settings";
-static const SDL_WindowFlags WINDOWFLAGS = SDL_WindowFlags(SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-static const SDL_Rect WINDOWDEFAULTSIZE(100, 100, 500, 500);
-
 int WinMain(){
+  // Read Files
   Data::File settings = Data::File(SETTINGSPATH, 4);
   if(settings.isEmpty()){
     settings[0] = std::to_string(WINDOWDEFAULTSIZE.x);
@@ -15,14 +12,21 @@ int WinMain(){
     settings[2] = std::to_string(WINDOWDEFAULTSIZE.w);
     settings[3] = std::to_string(WINDOWDEFAULTSIZE.h);
     settings.save();
-  }
-  else settings.read();
+  } else settings.read();
 
-  Window window(TITLE, std::stoi(settings[0]), std::stoi(settings[1]), std::stoi(settings[2]), std::stoi(settings[3]), WINDOWFLAGS);
-  App app(&window);
-  app.Run();
+  Data::File leaderboard = Data::File(LEADERBOARDPATH, 1);
+  if(leaderboard.isEmpty()){
+    leaderboard[0] = std::to_string(0);
+    leaderboard.save();
+  } else leaderboard.read();
 
-  SDL_Rect rect = window.GetWindowPositionAndSize();
+  // Run App
+  Window window(std::stoi(settings[0]), std::stoi(settings[1]), std::stoi(settings[2]), std::stoi(settings[3]));
+  App app(&window, &leaderboard);
+  app.run();
+
+  // Save Window
+  SDL_Rect rect = window.getWindowPositionAndSize();
   settings[0] = std::to_string(rect.x);
   settings[1] = std::to_string(rect.y);
   settings[2] = std::to_string(rect.w);
