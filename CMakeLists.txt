@@ -8,7 +8,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "output/")
 file(GLOB_RECURSE files 
   "Tetris/**.cpp" 
   "Tetris/**.h" 
-  "Tetris/**.hpp")
+  "Tetris/**.hpp",
+  "Tetris/**.o")
 
 file(GLOB_RECURSE libs
   "Tetris/vendor/**.a")
