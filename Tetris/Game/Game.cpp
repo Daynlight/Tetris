@@ -1,8 +1,7 @@
 #include "Game.h"
 
 App::App(Window *window, Data::File *leaderboard)
-  :window(window), leaderboard(leaderboard), tetris(window) {
-   }
+  :window(window), leaderboard(leaderboard), tetris(window) { }
 
 void App::run(){
   while(window->isRunning()){
@@ -65,7 +64,6 @@ void Tetris::run(){
   // block
   window->renderFillSquare(current_block_position * CELLSIZE + canva.x, canva.y + current_block_height*CELLSIZE, 
   CELLSIZE, CELLSIZE, 255, 0, 0);
-
 
   // Clock Sync
   std::chrono::time_point now = std::chrono::high_resolution_clock::now();

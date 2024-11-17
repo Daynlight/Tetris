@@ -19,7 +19,6 @@ private:
   Uint8 current_block_height = 0;
 };
 
-
 class App{
 private:
   enum State{
