@@ -1,24 +1,22 @@
 #pragma once 
+#include "../Settings.h"
 #include "../Renderer/Renderer.h"
 #include "../vendor/Data/Data.h"
 #include <chrono>
 
 class Tetris{
 public:
-  Tetris(Window* window, Uint8 rows, Uint8 columns, Uint32 cell_size, Uint32 tick_speed);
-  void Run();
-  void Clear();
-  bool IsEnded();
-  void TetrisEvent(SDL_Event event);
+  Tetris(Window* window);
+  void run();
+  void clear();
+  bool isRunning();
+  void tetrisEvent(SDL_Event event);
 private:
   Window* window;
-  bool is_ended = false;
+  bool running = true;
   std::chrono::time_point<std::chrono::high_resolution_clock> last;
-  Uint32 tick_speed;
   Uint8 current_block_position;
   Uint8 current_block_height = 0;
-  Uint8 rows, columns;
-  Uint32 cell_size;
 };
 
 
@@ -31,11 +29,11 @@ private:
     GameEnded
   };
 public:
-  App(Window *window, Data::File *leaderboard, const Uint8 rows, const Uint8 columns, const Uint32 cell_size, Uint32 tick_speed);
-  void Run();
+  App(Window *window, Data::File *leaderboard);
+  void run();
 private:
-  void RenderHome();
-  void AppEvent();
+  void renderHome();
+  void appEvent();
   State game_state = Home;
   Data::File *leaderboard;
   Window *window;
