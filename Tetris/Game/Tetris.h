@@ -9,9 +9,9 @@ struct Block {
   void render(SDL_Rect canva);
   bool colision(Uint8 x, Uint8 y);
   bool colisionWithBlock(Block block, std::pair<int,int> move);
-  bool colisionX(Uint8 x);
-  bool colisionY(Uint8 y);
-  void rotate(Uint8 rotation);
+  bool colisionX(int x);
+  bool colisionY(int y);
+  void rotate(int rotation);
   std::vector<std::pair<int, int>> blocks;
   SDL_Colour colour = SDL_Colour(0,0,0);
   Uint8 x = 0, y = 0;

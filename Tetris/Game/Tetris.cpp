@@ -41,6 +41,12 @@ void Tetris::run(){
     else {
       blocks.emplace_back(blocks_variants[random(blocks_variants.size() - 1)]);
       blocks[blocks.size() - 1].colour = colour_variants[random(colour_variants.size() - 1)];
+      bool colision = false;
+      for(int i = 0; i < blocks.size() - 1; i++){
+        colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 1));
+        if(colision) break;
+      }
+      if(colision) running = false;
     }
     last = std::chrono::high_resolution_clock::now();
   }
@@ -59,25 +65,21 @@ bool Tetris::isRunning(){ return running; }
 void Tetris::tetrisEvent(SDL_Event event){
   switch (event.type){
   case SDL_KEYDOWN:
-    if(event.key.keysym.sym == SDLK_LEFT && !blocks[blocks.size() - 1].colisionX(0)){
+    if(event.key.keysym.sym == SDLK_a && !blocks[blocks.size() - 1].colisionX(0)){
       bool colision = false;
       for(int i = 0; i < blocks.size() - 1; i++){
         colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(-1, 0)); if(colision) break;
-        colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 1)); if(colision) break;
-        colision = blocks[blocks.size() - 1].colisionY(COLUMNS - 1); if(colision) break;
       }
       if(!colision) blocks[blocks.size() -1].x--;
     }
-    if(event.key.keysym.sym == SDLK_RIGHT && !blocks[blocks.size() - 1].colisionX(ROWS - 1)) {
+    if(event.key.keysym.sym == SDLK_d && !blocks[blocks.size() - 1].colisionX(ROWS - 1)) {
       bool colision = false;
       for(int i = 0; i < blocks.size() - 1; i++){
         colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(1, 0)); if(colision) break;
-        colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 1)); if(colision) break;
-        colision = blocks[blocks.size() - 1].colisionY(COLUMNS - 1); if(colision) break;
       }
       if(!colision) blocks[blocks.size() -1].x++;
     }
-    if(event.key.keysym.sym == SDLK_DOWN && !blocks[blocks.size() - 1].colisionY(COLUMNS - 1)) {
+    if(event.key.keysym.sym == SDLK_s && !blocks[blocks.size() - 1].colisionY(COLUMNS - 1)) {
       bool colision = false;
       for(int i = 0; i < blocks.size() - 1; i++){
         colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 1)); if(colision) break;
@@ -85,6 +87,26 @@ void Tetris::tetrisEvent(SDL_Event event){
         last = std::chrono::high_resolution_clock::now();
       }
       if(!colision) blocks[blocks.size() -1].y++;
+    }
+    if(event.key.keysym.sym == SDLK_e){
+      blocks[blocks.size() - 1].rotate(-1);
+      bool colision = false;
+      for(int i = 0; i < blocks.size() - 1; i++){
+        colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 0)); if(colision) break;
+      }
+      if(!colision) colision = blocks[blocks.size() - 1].colisionX(ROWS);
+      if(!colision) colision = blocks[blocks.size() - 1].colisionY(COLUMNS);
+      if(colision) blocks[blocks.size() - 1].rotate(1);
+    }
+    if(event.key.keysym.sym == SDLK_q){
+      blocks[blocks.size() - 1].rotate(1);
+      bool colision = false;
+      for(int i = 0; i < blocks.size() - 1; i++){
+        colision = blocks[i].colisionWithBlock(blocks[blocks.size() - 1], std::pair<int,int>(0, 0)); if(colision) break;
+      }
+      if(!colision) colision = blocks[blocks.size() - 1].colisionX(ROWS);
+      if(!colision) colision = blocks[blocks.size() - 1].colisionY(COLUMNS);
+      if(colision) blocks[blocks.size() - 1].rotate(-1);
     }
     if(event.key.keysym.sym == SDLK_ESCAPE) running = false;
     break;
@@ -99,19 +121,19 @@ void Block::render(SDL_Rect canva){
     window->renderFillSquare((x + el.first) * CELLSIZE + canva.x, canva.y + (y + el.second)*CELLSIZE, CELLSIZE, CELLSIZE, colour.r, colour.g, colour.b);
 }
 
-bool Block::colisionX(Uint8 x) {
+bool Block::colisionX(int x) {
   bool colision = false;
   for(std::pair<int,int> &el : blocks){
-      if(this->x + el.first == x) colision = true;
+      if(this->x + el.first == x || static_cast<int>(this->x) + static_cast<int>(el.first) < 0) colision = true;
       if(colision) break;
     }
   return colision;
 }
 
-bool Block::colisionY(Uint8 y) {
+bool Block::colisionY(int y) {
   bool colision = false;
   for(std::pair<int,int> &el : blocks){
-    if(this->y + el.second == y) colision = true;
+    if(this->y + el.second == y ||  static_cast<int>(this->y) + static_cast<int>(el.second) < 0) colision = true;
     if(colision) break;
   }
     
@@ -134,5 +156,19 @@ bool Block::colisionWithBlock(Block block, std::pair<int,int> move) {
   return colision;
 }
 
-void Block::rotate(Uint8 rotation) {
+void Block::rotate(int rotation) {
+  if(rotation == -1){
+    for(std::pair<int,int> &el : blocks){
+      int first = el.first;
+      el.first = 0 - el.second;
+      el.second = first;
+    }
+  }
+  else if(rotation == 1){
+    for(std::pair<int,int> &el : blocks){
+      int second = el.second;
+      el.second = 0 - el.first;
+      el.first = second;
+    }
+  }
 }
