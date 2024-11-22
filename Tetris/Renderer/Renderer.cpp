@@ -1,8 +1,11 @@
 #include "Renderer.h"
 
 Window::Window(int x, int y, int w, int h){
-    window = SDL_CreateWindow(TITLE, x, y, w, h, WINDOWFLAGS);
-    renderer = SDL_CreateRenderer(window, 0, 0);
+  SDL_Init(SDL_INIT_EVERYTHING);
+  TTF_Init();
+  font = TTF_OpenFont(FONTNAME.c_str(), FONTSIZE);
+  window = SDL_CreateWindow(TITLE, x, y, w, h, WINDOWFLAGS);
+  renderer = SDL_CreateRenderer(window, 0, 0);
 }
 
 void Window::windowEvent(SDL_Event event){
@@ -51,4 +54,22 @@ void Window::renderFillSquare(SDL_Rect *box, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
 void Window::renderFillSquare(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
   SDL_Rect box(x, y, w, h);
   renderFillSquare(&box, r, g, b, a);
+}
+
+void Window::renderTexture(int x, int y, int w, int h, SDL_Texture *texture){
+  SDL_Rect rect = SDL_Rect(x, y, w, h);
+  SDL_RenderCopy(renderer, texture, nullptr, &rect);
+}
+
+std::pair<int, int> Window::getTextSize(std::string text){
+  int w = 0,  h = 0;
+  TTF_SizeText(font, text.c_str(), &w, &h);
+  return std::pair<int, int>(w, h);
+}
+
+SDL_Texture *Window::createTextTexture(std::string text) {
+  SDL_Surface * surface = TTF_RenderText_Blended(font, text.c_str(), SDL_Colour(255,255,255,255));
+  SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+  SDL_FreeSurface(surface);
+  return texture;
 }

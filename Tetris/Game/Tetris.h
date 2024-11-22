@@ -26,6 +26,7 @@ public:
   void start();
   bool isRunning();
   void tetrisEvent(SDL_Event event);
+  Uint32 getPoints();
 private:
   void initBlockVariants();
   void createBlockVariant(std::initializer_list<std::pair<int,int>> list);
@@ -36,5 +37,6 @@ private:
   Window* window;
   bool running = true;
   Uint32 points = 0;
+  SDL_Texture* points_texture;
   std::chrono::time_point<std::chrono::high_resolution_clock> last;
 };

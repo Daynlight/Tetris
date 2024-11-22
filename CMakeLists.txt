@@ -19,6 +19,9 @@ add_executable(Tetris WIN32 ${files})
 
 find_package(SDL2 REQUIRED)
 target_link_libraries(Tetris PRIVATE ${SDL2_LIBRARIES})
+find_package(SDL2_ttf REQUIRED)
+target_link_libraries(Tetris PRIVATE SDL2::SDL2 SDL2::SDL2main SDL2_ttf)
+
 target_link_libraries(Tetris PRIVATE ${libs})
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Tetris)
