@@ -1,4 +1,4 @@
-#include "Game/Game.h"
+#include "Game/App.h"
 #include "Settings.h"
 #include "Renderer/Renderer.h"
 #include "vendor/Data/Data.h"
