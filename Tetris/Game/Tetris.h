@@ -36,5 +36,6 @@ private:
   Window* window;
   bool running = true;
   Uint32 points = 0;
+  SDL_Texture* points_texture;
   std::chrono::time_point<std::chrono::high_resolution_clock> last;
 };

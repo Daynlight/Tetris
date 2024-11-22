@@ -19,11 +19,14 @@ size_t Tetris::random(size_t x) {
 
 void Tetris::run(){
   SDL_Rect canva = window->getWindowPositionAndSize();
-  canva.y = (canva.h - CELLSIZE*COLUMNS)/2;
-  canva.x = (canva.w - CELLSIZE*ROWS) - canva.y;
+  canva.y = canva.h - CELLSIZE*COLUMNS;
+  canva.x = (canva.w - CELLSIZE*ROWS)/2;
   canva.w = CELLSIZE*ROWS;
   canva.h = CELLSIZE*COLUMNS;
   window->renderFillSquare(canva.x, canva.y, canva.w, canva.h, 255, 255, 255);
+
+  std::pair<int, int> text_sizes = window->getTextSize(std::to_string(points));
+  window->renderTexture((canva.w - text_sizes.first)/2, (canva.y - text_sizes.second)/2, text_sizes.first, text_sizes.second, points_texture);
 
   for(Block &block : blocks)
     block.render(canva);
@@ -40,6 +43,7 @@ void Tetris::run(){
     if(!blocks[blocks.size() - 1].colisionY(COLUMNS - 1) && !colision) blocks[blocks.size() - 1].y++;
     else {
       bool checking = 0;
+      float combo = 1;
       do{
         checking = 0;
         for(int i = COLUMNS - 1; i > 0; i--){
@@ -50,15 +54,20 @@ void Tetris::run(){
               
           if(rows_element == ROWS){
             checking = 1;
-          for(Block & block : blocks)
-            for(int j = 0; j < block.blocks.size(); j++)
-              if(block.y + block.blocks[j].second == i) {
-                block.blocks.erase(block.blocks.begin() + j);
+            points += BASEPOINTSFORROW*combo;
+            combo *= COMBOMULTIPLYER;
+            points_texture = window->createTextTexture(std::to_string(points));
+          for(int k = 0; k < blocks.size(); k++)
+            for(int j = 0; j < blocks[k].blocks.size(); j++)
+              if(blocks[k].y + blocks[k].blocks[j].second == i) {
+                blocks[k].blocks.erase(blocks[k].blocks.begin() + j);
+                if(!blocks[k].blocks.size()) blocks.erase(blocks.begin() + k);
                 j--;
               }
-              for(Block &move_block : blocks)
+              for(Block &move_block : blocks){
                 for(std::pair<int, int> &el2 : move_block.blocks)
                   if(move_block.y + el2.second <= i) el2.second++;
+              }
           }
         }
       } while(checking);
@@ -82,6 +91,7 @@ void Tetris::start(){
   blocks[blocks.size() - 1].colour = colour_variants[random(colour_variants.size() - 1)];
   running = true;
   points = 0;
+  points_texture = window->createTextTexture(std::to_string(points));
   last = std::chrono::high_resolution_clock::now();
 }
 
