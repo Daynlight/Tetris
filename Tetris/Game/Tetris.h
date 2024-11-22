@@ -26,6 +26,7 @@ public:
   void start();
   bool isRunning();
   void tetrisEvent(SDL_Event event);
+  Uint32 getPoints();
 private:
   void initBlockVariants();
   void createBlockVariant(std::initializer_list<std::pair<int,int>> list);

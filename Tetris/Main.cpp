@@ -25,7 +25,8 @@ int WinMain(){
   App app(&window, &leaderboard);
   app.run();
 
-  // Save Window
+  // Save FIles
+  leaderboard.save();
   SDL_Rect rect = window.getWindowPositionAndSize();
   settings[0] = std::to_string(rect.x);
   settings[1] = std::to_string(rect.y);

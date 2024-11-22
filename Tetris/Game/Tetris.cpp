@@ -148,6 +148,10 @@ void Tetris::tetrisEvent(SDL_Event event){
   }
 }
 
+Uint32 Tetris::getPoints(){
+  return points;
+}
+
 Block::Block(Window *window, Uint8 x, Uint8 y, std::initializer_list<std::pair<int, int>> blocks)
   : window(window), x(x), y(y), blocks(blocks) {}
 

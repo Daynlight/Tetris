@@ -21,6 +21,8 @@ private:
   State game_state = Home;
   Data::File *leaderboard;
   Window *window;
+  SDL_Texture *leaderboard_render;
+   std::pair<int,int> leaderboard_sizes;
   Tetris tetris;
 
 };
