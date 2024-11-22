@@ -1,4 +1,0 @@
-[submodule "Tetris/vendor/Data"]
-	path = Tetris/vendor/Data
-	url = https://github.com/Daynlight/Data
-	branch = deploy
