@@ -11,6 +11,7 @@ struct Block {
   bool colisionWithBlock(Block block, std::pair<int,int> move);
   bool colisionX(int x);
   bool colisionY(int y);
+  void removeY(int x);
   void rotate(int rotation);
   std::vector<std::pair<int, int>> blocks;
   SDL_Colour colour = SDL_Colour(0,0,0);
@@ -34,5 +35,6 @@ private:
   std::vector<SDL_Colour> colour_variants;
   Window* window;
   bool running = true;
+  Uint32 points = 0;
   std::chrono::time_point<std::chrono::high_resolution_clock> last;
 };

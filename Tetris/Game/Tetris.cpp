@@ -39,6 +39,30 @@ void Tetris::run(){
       
     if(!blocks[blocks.size() - 1].colisionY(COLUMNS - 1) && !colision) blocks[blocks.size() - 1].y++;
     else {
+      bool checking = 0;
+      do{
+        checking = 0;
+        for(int i = COLUMNS - 1; i > 0; i--){
+          int rows_element = 0;
+          for(Block & block : blocks)
+            for(std::pair<int, int> &el : block.blocks)
+              if(block.y + el.second == i) rows_element++;
+              
+          if(rows_element == ROWS){
+            checking = 1;
+          for(Block & block : blocks)
+            for(int j = 0; j < block.blocks.size(); j++)
+              if(block.y + block.blocks[j].second == i) {
+                block.blocks.erase(block.blocks.begin() + j);
+                j--;
+              }
+              for(Block &move_block : blocks)
+                for(std::pair<int, int> &el2 : move_block.blocks)
+                  if(move_block.y + el2.second <= i) el2.second++;
+          }
+        }
+      } while(checking);
+
       blocks.emplace_back(blocks_variants[random(blocks_variants.size() - 1)]);
       blocks[blocks.size() - 1].colour = colour_variants[random(colour_variants.size() - 1)];
       bool colision = false;
@@ -57,6 +81,7 @@ void Tetris::start(){
   blocks.emplace_back(blocks_variants[random(blocks_variants.size() - 1)]);
   blocks[blocks.size() - 1].colour = colour_variants[random(colour_variants.size() - 1)];
   running = true;
+  points = 0;
   last = std::chrono::high_resolution_clock::now();
 }
 
@@ -133,11 +158,17 @@ bool Block::colisionX(int x) {
 bool Block::colisionY(int y) {
   bool colision = false;
   for(std::pair<int,int> &el : blocks){
-    if(this->y + el.second == y ||  static_cast<int>(this->y) + static_cast<int>(el.second) < 0) colision = true;
+    if(this->y + el.second == y || static_cast<int>(this->y) + static_cast<int>(el.second) < 0) colision = true;
     if(colision) break;
   }
     
   return colision;
+}
+
+void Block::removeY(int y) {
+  for(std::pair<int,int> &el : blocks){
+    if(this->y + el.second == y ||  static_cast<int>(this->y) + static_cast<int>(el.second) < 0) {el.first = 0; el.second = 0;}
+  }
 }
 
 bool Block::colision(Uint8 x, Uint8 y) {
