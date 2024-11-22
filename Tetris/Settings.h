@@ -12,5 +12,5 @@ static const SDL_Rect WINDOWDEFAULTSIZE(100, 100, 30*ROWS, 30*COLUMNS + 70);
 static const Uint32 CELLSIZE = 30, TICKSPEED = 700;
 static const float COMBOMULTIPLYER = 1.5f;
 static const Uint32 BASEPOINTSFORROW = 1000;
-static const std::string FONTNAME = "../../Tetris/assets/Minecraft.ttf";
+static const std::string FONTNAME = "Minecraft.ttf";
 static const Uint32 FONTSIZE = 64;
