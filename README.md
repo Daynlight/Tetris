@@ -1,18 +1,12 @@
 <div align="center">
 
-# 🎮 Tetris Clone
+# Tetris Clone
 
 Welcome to my Tetris clone project! This is a simple implementation of the classic Tetris game built using SDL.
 
 </div>
 
-## ✨ Features
-
-- 🎲 Classic Tetris gameplay.
-- 🕹️ Intuitive keyboard controls.
-- 🪶 Simple and lightweight implementation.
-
-## 🎯 Controls
+## Controls
 
 - **A Key**: Move the tetromino left.
 - **D Key**: Move the tetromino right.
@@ -20,11 +14,6 @@ Welcome to my Tetris clone project! This is a simple implementation of the class
 - **Q Key**: Rotate the tetromino clockwise.
 - **E Key**: Hard drop the tetromino.
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 👾 Acknowledgements
-
-- The Tetris game concept was created by Alexey Pajitnov in 1984.
-- This project was inspired by various Tetris implementations and tutorials available online.
