@@ -14,6 +14,13 @@ Welcome to my Tetris clone project! This is a simple implementation of the class
 - **Q Key**: Rotate the tetromino clockwise.
 - **E Key**: Hard drop the tetromino.
 
+## Requirements
+* SDL2 downloaded
+* SDL2_ttf downloaded
+* git
+* cmake
+
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
