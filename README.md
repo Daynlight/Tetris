@@ -15,10 +15,13 @@ Welcome to my Tetris clone project! This is a simple implementation of the class
 - **E Key**: Hard drop the tetromino.
 
 ## Requirements
+* cmake
+* git
 * SDL2 downloaded
 * SDL2_ttf downloaded
-* git
-* cmake
+
+## Notes
+to compile you might move assets to output
 
 ## License
 
