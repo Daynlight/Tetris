@@ -2,3 +2,11 @@
 	path = Tetris/vendor/Data
 	url = https://github.com/Daynlight/Data
 	branch = deploy
+[submodule "Tetris/vendor/SDL2"]
+	path = Tetris/vendor/SDL2
+	url = https://github.com/libsdl-org/SDL.git
+	branch = SDL2
+[submodule "Tetris/vendor/SDL2_ttf"]
+	path = Tetris/vendor/SDL2_ttf
+	url = https://github.com/libsdl-org/SDL_ttf.git
+	branch = SDL2
