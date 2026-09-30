@@ -40,7 +40,6 @@ target_link_libraries(Tetris PRIVATE
   Data
 )
 
-target_link_libraries(Tetris PRIVATE ${libs})
 target_include_directories(Tetris PRIVATE 
   ${SDL2_INCLUDE_DIRS} 
   ${SDL2_TTF_INCLUDE_DIRS}
