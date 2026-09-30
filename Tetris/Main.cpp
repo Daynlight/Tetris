@@ -1,9 +1,13 @@
 #include "Game/App.h"
 #include "Settings.h"
 #include "Renderer/Renderer.h"
-#include "vendor/Data/Data.h"
+#include "vendor/Data/Data/Data.h"
 
+#ifdef _WIN32
 int WinMain(){
+#else
+int main(){
+#endif
   // Read Files
   Data::File settings = Data::File(SETTINGSPATH, 4);
   if(settings.isEmpty()){

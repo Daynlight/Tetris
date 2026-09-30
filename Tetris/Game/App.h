@@ -2,7 +2,7 @@
 #include "../Settings.h"
 #include "../Renderer/Renderer.h"
 #include "Tetris.h"
-#include "../vendor/Data/Data.h"
+#include "../vendor/Data/Data/Data.h"
 
 class App{
 private:
