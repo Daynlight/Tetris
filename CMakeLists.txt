@@ -31,12 +31,25 @@ endif()
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_ttf CONFIG REQUIRED)
+find_package(PNG REQUIRED)
+find_package(Freetype REQUIRED)
+find_package(PNG REQUIRED)
+find_package(BZip2 REQUIRED)
+find_package(ZLIB REQUIRED)
+find_package(unofficial-brotli CONFIG QUIET)
 add_subdirectory(Tetris/vendor/Data)
 
-target_link_libraries(Tetris PRIVATE 
+target_link_libraries(Tetris PRIVATE
   $<TARGET_NAME_IF_EXISTS:SDL2::SDL2main>
   $<IF:$<TARGET_EXISTS:SDL2::SDL2>,SDL2::SDL2,SDL2::SDL2-static>
   $<IF:$<TARGET_EXISTS:SDL2_ttf::SDL2_ttf>,SDL2_ttf::SDL2_ttf,SDL2_ttf::SDL2_ttf-static>
+  PNG::PNG
+  Freetype::Freetype
+  PNG::PNG
+  BZip2::BZip2
+  $<TARGET_NAME_IF_EXISTS:unofficial::brotli::brotlidec>
+  $<TARGET_NAME_IF_EXISTS:unofficial::brotli::brotlicommon>
+  ZLIB::ZLIB
   Data
 )
 

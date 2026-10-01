@@ -2,6 +2,11 @@
   "name": "tetris",
   "version": "1.0.0",
   "dependencies": [
+    "zlib",
+    "libpng",
+    "bzip2",
+    "brotli",
+    "freetype",
     "sdl2",
     "sdl2-ttf"
   ]
